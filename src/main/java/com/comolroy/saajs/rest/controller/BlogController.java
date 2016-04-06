@@ -2,6 +2,7 @@ package com.comolroy.saajs.rest.controller;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,18 +33,18 @@ import com.comolroy.saajs.rest.resources.asm.BlogResourceAsm;
 public class BlogController {
 
 	private BlogService blogService;
+	
+	
 
+	public BlogController() {
+		super();
+	}
+	
+	@Autowired
 	public BlogController(BlogService blogService) {
 		this.blogService = blogService;
 	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<BlogListResource> findAllBlogs() {
-		BlogList blogList = blogService.findAllBlogs();
-		BlogListResource blogListResource = new BlogListResourceAsm().toResource(blogList);
-		return new ResponseEntity<BlogListResource>(blogListResource, HttpStatus.OK);
-	}
-
+	
 	@RequestMapping(value = "/{blogId}", method = RequestMethod.GET)
 	public ResponseEntity<BlogResource> getBlog(@PathVariable Long blogId) {
 		Blog blog = blogService.findBlog(blogId);
@@ -55,6 +56,25 @@ public class BlogController {
 			return new ResponseEntity<BlogResource>(HttpStatus.NOT_FOUND);
 		}
 
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<BlogListResource> findAllBlogs() {
+		BlogList blogList = blogService.findAllBlogs();
+		BlogListResource blogListResource = new BlogListResourceAsm().toResource(blogList);
+		return new ResponseEntity<BlogListResource>(blogListResource, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/{blogId}/blog-entries")
+	public ResponseEntity<BlogEntryListResource> findAllBlogEntries(@PathVariable Long blogId) {
+		try {
+			BlogEntryList blogEntryList = blogService.findAllBlogEntries(blogId);
+			BlogEntryListResource blogEntryListResource = new BlogEntryListResourceAsm().toResource(blogEntryList);
+			return new ResponseEntity<BlogEntryListResource>(blogEntryListResource, HttpStatus.OK);
+		} catch (BlogNotFoundException e) {
+			System.out.println("No Blog Found");
+			throw new NotFoundException();
+		}
 	}
 
 	@RequestMapping(value = "/{blogId}/blog-entries", method= RequestMethod.POST)
@@ -71,16 +91,6 @@ public class BlogController {
 		}
 	}
 
-	@RequestMapping(value="/{blogId}/blog-entries")
-	public ResponseEntity<BlogEntryListResource> findAllBlogEntries(@PathVariable Long blogId) {
-		try {
-			BlogEntryList blogEntryList = blogService.findAllBlogEntries(blogId);
-			BlogEntryListResource blogEntryListResource = new BlogEntryListResourceAsm().toResource(blogEntryList);
-			return new ResponseEntity<BlogEntryListResource>(blogEntryListResource, HttpStatus.OK);
-		} catch (BlogNotFoundException e) {
-			System.out.println("No Blog Found");
-			throw new NotFoundException();
-		}
-	}
+	
 
 }

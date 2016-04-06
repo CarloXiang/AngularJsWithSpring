@@ -7,6 +7,10 @@ import com.comolroy.saajs.core.entities.Blog;
 
 public class BlogList {
 	private List<Blog> blogs = new ArrayList<Blog>();
+	
+	public BlogList(List<Blog> blogs) {
+		this.blogs = blogs;
+	}
 
 	public List<Blog> getBlogs() {
 		return blogs;

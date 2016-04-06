@@ -73,8 +73,7 @@ public class BlogControllerTest {
 		blogB.setTitle("Blog Title 02");
 		list.add(blogB);
 
-		BlogList blogList = new BlogList();
-		blogList.setBlogs(list);
+		BlogList blogList = new BlogList(list);
 
 		when(service.findAllBlogs()).thenReturn(blogList);
 
@@ -162,9 +161,7 @@ public class BlogControllerTest {
 		list.add(entryA);
 		list.add(entryB);
 
-		BlogEntryList blogEntryList = new BlogEntryList();
-		blogEntryList.setEntries(list);
-		blogEntryList.setBlogId(1L);
+		BlogEntryList blogEntryList = new BlogEntryList(list,1L);
 
 		when(service.findAllBlogEntries(1L)).thenReturn(blogEntryList);
 

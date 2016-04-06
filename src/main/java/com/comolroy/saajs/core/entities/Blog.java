@@ -1,8 +1,18 @@
 package com.comolroy.saajs.core.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Blog {
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String title;
+	
+	@OneToOne
 	private Account owner;
 	public Long getId() {
 		return id;

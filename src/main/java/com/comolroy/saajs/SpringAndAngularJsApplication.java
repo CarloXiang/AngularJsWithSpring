@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ImportResource("classpath:/spring-config.xml")
 @EnableAutoConfiguration
+@EnableTransactionManagement // Enabling the Transactional properties of DAO entities
 public class SpringAndAngularJsApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(SpringAndAngularJsApplication.class);

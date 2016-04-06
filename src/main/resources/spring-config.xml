@@ -1,11 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.comolroy"></context:component-scan>
+
+	<beans profile="dev">
+		<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="org.h2.Driver"></property>
+			<property name="url" value="jdbc:h2:mem:test"></property>
+			<property name="username" value="sa"></property>
+			<property name="password" value="sa"></property>
+		</bean>
+
+		<bean id="entityManagerFactory"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="dataSource" ref="dataSource"></property>
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+			</property>
+			<property name="jpaProperties">
+				<map>
+					<entry key="hibernate.hbm2ddl.auto" value="create-drop" />
+					<entry key="hibernate.show_sql" value="true" />
+				</map>
+			</property>
+
+
+			<property name="packagesToScan" value="com.comolroy.saajs.core.entities" />
+		</bean>
+	</beans>
+
+	<beans profile="production">
+		<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${jdbc.driver}"></property>
+			<property name="url" value="${jdbc.url}"></property>
+			<property name="username" value="${jdbc.username}"></property>
+			<property name="password" value="${jdbc.password}"></property>
+		</bean>
+
+		<bean id="entityManagerFactory"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="dataSource" ref="dataSource"></property>
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+			</property>
+			<property name="jpaProperties">
+				<map>
+					<entry key="hibernate.dialect" value="${jdbc.dialect}" />
+					<!-- <entry key="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+					<entry key="hibernate.show_sql" value="true" />
+				</map>
+			</property>
+
+
+			<property name="packagesToScan" value="com.comolroy.saajs.core.entities" />
+		</bean>
+	</beans>
+
+
+	<beans profile="production">
+	</beans>
+
+
 </beans>

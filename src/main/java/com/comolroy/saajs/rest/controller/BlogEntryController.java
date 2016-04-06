@@ -1,5 +1,6 @@
 package com.comolroy.saajs.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,11 @@ public class BlogEntryController {
 
 	private BlogEntryService blogEntryService;
 
+	public BlogEntryController() {
+		super();
+	}
+	
+	@Autowired
 	public BlogEntryController(BlogEntryService blogEntryService) {
 		this.blogEntryService = blogEntryService;
 	}
@@ -58,17 +64,6 @@ public class BlogEntryController {
 
 	}
 
-	@RequestMapping(value = "/{blogEntryId}", method = RequestMethod.DELETE)
-	public ResponseEntity<BlogEntryResource> deleteBlogEntry(@PathVariable Long blogEntryId) {
-		BlogEntry blogEntry = blogEntryService.deleteBlogEntry(blogEntryId);
-		if (blogEntry != null) {
-			BlogEntryResource blogEntryResource = new BlogEntryResourceAsm().toResource(blogEntry);
-			return new ResponseEntity<BlogEntryResource>(blogEntryResource, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<BlogEntryResource>(HttpStatus.NOT_FOUND);
-		}
-	}
-
 	@RequestMapping(value = "/{blogEntryId}", method = RequestMethod.PUT)
 	public ResponseEntity<BlogEntryResource> updateBlogEntry(@PathVariable("blogEntryId") Long blogEntryId,
 			@RequestBody BlogEntryResource sentBlogEntry) {
@@ -80,4 +75,16 @@ public class BlogEntryController {
 			return new ResponseEntity<BlogEntryResource>(HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@RequestMapping(value = "/{blogEntryId}", method = RequestMethod.DELETE)
+	public ResponseEntity<BlogEntryResource> deleteBlogEntry(@PathVariable Long blogEntryId) {
+		BlogEntry blogEntry = blogEntryService.deleteBlogEntry(blogEntryId);
+		if (blogEntry != null) {
+			BlogEntryResource blogEntryResource = new BlogEntryResourceAsm().toResource(blogEntry);
+			return new ResponseEntity<BlogEntryResource>(blogEntryResource, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<BlogEntryResource>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 }
