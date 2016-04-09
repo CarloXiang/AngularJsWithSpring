@@ -44,7 +44,7 @@ public class JpaBlogRepo implements BlogRepo {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Blog> findBlogsByAccount(Long accountId) {
-		Query query = em.createQuery("SELECT b FROM Blog b WHERE b.onwer.id=?1");
+		Query query = em.createQuery("SELECT b FROM Blog b WHERE b.owner.id=?1");
 		query.setParameter(1, accountId);
 		return query.getResultList();
 	}

@@ -14,6 +14,7 @@ public class Blog {
 	
 	@OneToOne
 	private Account owner;
+	
 	public Long getId() {
 		return id;
 	}

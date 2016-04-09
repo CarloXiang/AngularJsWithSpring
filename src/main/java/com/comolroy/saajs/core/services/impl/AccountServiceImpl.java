@@ -56,6 +56,7 @@ public class AccountServiceImpl implements AccountService {
 		if (account == null) {
 			throw new AccountDoesNotExistException();
 		}
+
 		return new BlogList(blogRepo.findBlogsByAccount(accountId));
 	}
 

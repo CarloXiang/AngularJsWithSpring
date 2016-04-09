@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 
 public class BlogListResource extends ResourceSupport {
-	private List<BlogResource> blogResources = new ArrayList<BlogResource>();
+	private List<BlogResource> blogs = new ArrayList<BlogResource>();
 
 	public List<BlogResource> getBlogResources() {
-		return blogResources;
+		return blogs;
 	}
 
 	public void setBlogResources(List<BlogResource> blogResources) {
-		this.blogResources = blogResources;
+		this.blogs = blogResources;
 	}
 
 	
