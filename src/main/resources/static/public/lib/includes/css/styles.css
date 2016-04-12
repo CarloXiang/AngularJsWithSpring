@@ -26,6 +26,24 @@ Updated: Mar 2016
    -------------------------------------- */
 
 /* --------------------------------------
+   Homepage
+   -------------------------------------- */
+#features img {
+	width: 200px;
+	height: 200px;
+	margin:  0 0 20px;  
+}
+#features p {
+	text-align: justify;
+	padding: 10px;
+}
+#features {
+    text-align: center;
+}
+
+
+
+/* --------------------------------------
    Global Styles
    -------------------------------------- */
 [ng\\ :cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak,

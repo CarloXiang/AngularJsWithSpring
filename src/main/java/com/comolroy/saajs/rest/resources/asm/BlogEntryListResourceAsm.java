@@ -35,8 +35,6 @@ public class BlogEntryListResourceAsm extends ResourceAssemblerSupport<BlogEntry
 		listResource.setEntires(resources);
 		
 		listResource.add(linkTo(methodOn(BlogController.class).findAllBlogEntries(list.getBlogId())).withSelfRel());
-		// Following list is to get the link for all blogs
-		listResource.add(linkTo(methodOn(BlogController.class).findAllBlogs()).withRel("all"));
 		return listResource;
 	}
 	
